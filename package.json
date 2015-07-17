@@ -1,0 +1,16 @@
+{
+  "name": "bcrypt-cli",
+  "version": "1.0.0",
+  "description": "Command line for generating bcrypt'd strings",
+  "bin": {
+    "bcrypt": "bin/bcrypt"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Carson Darling <carsondarling@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^0.8.3"
+  }
+}
