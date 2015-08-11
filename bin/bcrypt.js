@@ -34,7 +34,8 @@ if (args.verbose) console.error('Generating salt with %s rounds.', args.rounds);
 var salt = bcrypt.genSaltSync(args.rounds);
 
 if (args.verbose) console.error('Generating hash.');
-var hash = bcrypt.hashSync('B4c0/\/', salt);
+var hash = bcrypt.hashSync(args.rawText, salt);
 
 if (args.verbose) process.stderr.write('Output: ');
-console.log(hash);
+process.stdout.write(hash);
+process.stderr.write('\n');
