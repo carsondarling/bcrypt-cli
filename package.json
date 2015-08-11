@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Command line for generating bcrypt'd strings",
   "bin": {
-    "bcrypt": "bin/bcrypt.js"
+    "bcrypt": "bin/bcrypt.js",
+    "debcrypt": "bin/debcrypt.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -6,38 +6,36 @@ var ArgumentParser = require('argparse').ArgumentParser;
 var parser = new ArgumentParser({
   version: package.version,
   addHelp: true,
-  description: 'Bcrypt ALL the things!'
+  description: 'Check a value against it\'s bcrypted hash'
 });
 
-parser.addArgument(['-s', '--salt'], {
-  help: 'Pre-generated salt'
-});
-
-parser.addArgument(['-V', '--verbose'], {
+parser.addArgument(['-Q', '--quiet'], {
   action: 'storeTrue',
-  help: 'Enable verbose output'
+  help: 'Disable verbose output'
 });
 
-parser.addArgument(['-r', '--rounds'], {
-  help: 'Number of rounds to use (default 10)',
-  defaultValue: 10,
-  type: 'int'
+parser.addArgument(['hash'], {
+  help: 'The bcrypted hash'
 });
 
 parser.addArgument(['rawText'], {
   nargs: '?',
-  help: 'The data to encrypt'
+  help: 'The raw text to check'
 });
 
 var args = parser.parseArgs();
 
 // Handle various input options
 if (args.rawText) {
-  processInput(null, args.rawText);
+  processInput(null, args.hash, args.rawText);
 } else if (process.stdin.isTTY) {
-  readTTY(processInput);
+  readTTY(function(err, raw) {
+    return processInput(err, args.hash, raw);
+  });
 } else {
-  readFile(processInput);
+  readPipe(function(err, raw) {
+    return processInput(err, args.hash, raw);
+  });
 }
 
 
@@ -50,25 +48,30 @@ if (args.rawText) {
  * Take input, run it through bcrypt with the right parameters, and output
  * results.
  */
-function processInput(err, input) {
+function processInput(err, hash, raw) {
   if (err) return process.exit(1);
 
-  if (args.verbose) console.error('Generating salt with %s rounds.', args.rounds);
-  var salt = bcrypt.genSaltSync(args.rounds);
+  bcrypt.compare(raw, hash, function(err, match) {
+    if (err) {
+      if (!args.quiet) console.error('Error checking hash: %s', err.message);
+      return process.exit(1);
+    }
 
-  if (args.verbose) console.error('Generating hash.');
-  var hash = bcrypt.hashSync(input, salt);
+    if (!match) {
+      if (!args.quiet) console.error('Hash does not match.');
+      return process.exit(1);
+    }
 
-  if (args.verbose) process.stderr.write('Output: ');
-  process.stdout.write(hash);
-  process.stderr.write('\n');
+    if (!args.quiet) console.error('Match!');
+    return process.exit(0);
+  });
 }
 
 
 /**
  * Read stdin as a pipe
  */
-function readFile(callback) {
+function readPipe(callback) {
   stdInput = '';
   process.stdin.setEncoding('utf8');
 
