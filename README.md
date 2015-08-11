@@ -8,6 +8,12 @@ Both scripts have 3 different input options for the raw text: (1) via positional
 
 In addition, **bcrypt** only outputs the hashed value to `stdout`, so that it works well with piping.
 
+### Installation
+
+```
+npm install -g @carsondarling/bcrypt-cli
+```
+
 ### Example Usage
 
 ```bash
