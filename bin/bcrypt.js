@@ -61,7 +61,7 @@ function processInput(err, input) {
 
   if (args.verbose) process.stderr.write('Output: ');
   process.stdout.write(hash);
-  process.stderr.write('\n');
+  if (args.verbose) process.stderr.write('\n');
 }
 
 
