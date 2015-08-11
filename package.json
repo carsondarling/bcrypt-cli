@@ -1,5 +1,5 @@
 {
-  "name": "bcrypt-cli",
+  "name": "@carsondarling/bcrypt-cli",
   "version": "1.0.0",
   "description": "Command line for generating bcrypt'd strings",
   "bin": {
