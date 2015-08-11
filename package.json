@@ -12,6 +12,7 @@
   "author": "Carson Darling <carsondarling@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "argparse": "^1.0.2",
     "bcrypt": "^0.8.3"
   }
 }
