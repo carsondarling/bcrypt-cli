@@ -1,6 +1,6 @@
 {
   "name": "@carsondarling/bcrypt-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Command line for generating bcrypt'd strings",
   "bin": {
     "bcrypt": "bin/bcrypt.js",
