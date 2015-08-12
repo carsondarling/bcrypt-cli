@@ -21,6 +21,22 @@ $ bcrypt
 Raw text: ****************
 $2a$10$r7mriA5IanZFDLlpNRzqzuqiJKDXYrxczqdLK9PC5iASl43lGCXi6
 
+$ bcrypt raw-text
+$2a$10$vjmnk..OEgxkHxI0.Nw8u.nXDA.pERxqiboSP4WqOoqkLwM/2dE4C
+
+$ cat filename | bcrypt
+$2a$10$3Bp6aDK3gVLI7xmlnK5i2.vPwR5BV51vJu3O6Pp0aApDHoHkVex.m
+
+$ debcrypt '$2a$10$vjmnk..OEgxkHxI0.Nw8u.nXDA.pERxqiboSP4WqOoqkLwM/2dE4C'
+Raw text: ********
+Match!
+
+$ debcrypt '$2a$10$vjmnk..OEgxkHxI0.Nw8u.nXDA.pERxqiboSP4WqOoqkLwM/2dE4C' raw-text
+Match!
+
+$ echo -n 'raw-text' | debcrypt '$2a$10$vjmnk..OEgxkHxI0.Nw8u.nXDA.pERxqiboSP4WqOoqkLwM/2dE4C'
+Match!
+
 $ debcrypt $(bcrypt test-secret) test-secret
 Match!
 
