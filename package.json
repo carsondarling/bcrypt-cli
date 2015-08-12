@@ -1,18 +1,22 @@
 {
   "name": "@carsondarling/bcrypt-cli",
   "version": "1.0.1",
-  "description": "Command line for generating bcrypt'd strings",
+  "description": "Command-line helpers for bcrypt fun!",
   "bin": {
     "bcrypt": "bin/bcrypt.js",
     "debcrypt": "bin/debcrypt.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "debcrypt $(bcrypt test) test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carsondarling/bcrypt-cli.git"
   },
   "author": "Carson Darling <carsondarling@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "argparse": "^1.0.2",
-    "bcrypt": "^0.8.3"
+    "argparse": "1.0.2",
+    "bcrypt": "0.8.3"
   }
 }
