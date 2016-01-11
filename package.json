@@ -1,6 +1,6 @@
 {
   "name": "@carsondarling/bcrypt-cli",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Command-line helpers for bcrypt fun!",
   "bin": {
     "bcrypt": "bin/bcrypt.js",
