@@ -13,6 +13,18 @@ In addition, **bcrypt** only outputs the hashed value to `stdout`, so that it wo
 ```
 npm install -g @carsondarling/bcrypt-cli
 ```
+Depending on the OS you are running on it can be necessary to install the Node.js native addon build tool and rebuild the bcrypt module:
+
+```
+# Install the native addon build tool
+npm install -g node-gyp
+
+# cd in the dir where node modules are (may differ depending on your distro, /usr/local/lib/node_modules is a sensible alternative)
+cd /usr/lib/node_modules/
+cd @carsondarling/bcrypt-cli/node_modules/bcrypt
+
+node-gyp rebuild
+```
 
 ### Example Usage
 
