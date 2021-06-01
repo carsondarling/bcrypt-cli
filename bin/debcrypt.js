@@ -4,40 +4,43 @@ var bcrypt = require('bcrypt');
 var ArgumentParser = require('argparse').ArgumentParser;
 
 var parser = new ArgumentParser({
+  add_help: true,
+  description: "Check a value against it's bcrypted hash",
+});
+
+parser.add_argument('-v', '--version', {
+  action: 'version',
   version: package.version,
-  addHelp: true,
-  description: 'Check a value against it\'s bcrypted hash'
 });
 
-parser.addArgument(['-Q', '--quiet'], {
-  action: 'storeTrue',
-  help: 'Disable verbose output'
+parser.add_argument('-Q', '--quiet', {
+  action: 'store_true',
+  help: 'Disable verbose output',
 });
 
-parser.addArgument(['hash'], {
-  help: 'The bcrypted hash'
+parser.add_argument('hash', {
+  help: 'The bcrypted hash',
 });
 
-parser.addArgument(['rawText'], {
+parser.add_argument('rawText', {
   nargs: '?',
-  help: 'The raw text to check'
+  help: 'The raw text to check',
 });
 
-var args = parser.parseArgs();
+var args = parser.parse_args();
 
 // Handle various input options
 if (args.rawText) {
   processInput(null, args.hash, args.rawText);
 } else if (process.stdin.isTTY) {
-  readTTY(function(err, raw) {
+  readTTY(function (err, raw) {
     return processInput(err, args.hash, raw);
   });
 } else {
-  readPipe(function(err, raw) {
+  readPipe(function (err, raw) {
     return processInput(err, args.hash, raw);
   });
 }
-
 
 /**
  * Helpers
@@ -51,7 +54,7 @@ if (args.rawText) {
 function processInput(err, hash, raw) {
   if (err) return process.exit(1);
 
-  bcrypt.compare(raw, hash, function(err, match) {
+  bcrypt.compare(raw, hash, function (err, match) {
     if (err) {
       if (!args.quiet) console.error('Error checking hash: %s', err.message);
       return process.exit(1);
@@ -67,7 +70,6 @@ function processInput(err, hash, raw) {
   });
 }
 
-
 /**
  * Read stdin as a pipe
  */
@@ -75,11 +77,11 @@ function readPipe(callback) {
   stdInput = '';
   process.stdin.setEncoding('utf8');
 
-  process.stdin.on('data', function(chunk) {
+  process.stdin.on('data', function (chunk) {
     stdInput += chunk;
   });
 
-  process.stdin.on('end', function() {
+  process.stdin.on('end', function () {
     callback(null, stdInput);
   });
 
@@ -87,7 +89,6 @@ function readPipe(callback) {
 
   process.stdin.resume();
 }
-
 
 /**
  * Read stdin as a TTY
@@ -102,9 +103,8 @@ function readTTY(callback) {
 
   process.stdin.on('error', callback);
 
-  process.stdin.on('data', function(chunk) {
+  process.stdin.on('data', function (chunk) {
     switch (chunk) {
-
       // They've finished typing their password
       case '\n':
       case '\r':
